@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sentinel CV</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">LOCAL SAFETY MONITORING</p>
+        <h1>Sentinel CV</h1>
+      </div>
+      <div id="system-status" class="status">Connecting…</div>
+    </header>
+
+    <main>
+      <section>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">CAMERAS</p>
+            <h2>Live overview</h2>
+          </div>
+          <button id="refresh">Refresh</button>
+        </div>
+        <div id="camera-grid" class="camera-grid"></div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">EVENTS</p>
+            <h2>Recent alerts</h2>
+          </div>
+        </div>
+        <div id="alerts" class="alerts"></div>
+      </section>
+    </main>
+
+    <template id="camera-template">
+      <article class="camera-card">
+        <div class="camera-frame"><img alt="Live camera preview"></div>
+        <div class="camera-info">
+          <div><h3></h3><p class="camera-id"></p></div>
+          <span class="camera-state"></span>
+        </div>
+        <p class="camera-error"></p>
+      </article>
+    </template>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,58 @@
+timezone: Asia/Kolkata
+evidence_retention_days: 7
+rules:
+  - id: entrance_after_hours
+    camera_id: entrance
+    type: restricted_area
+    name: Entrance after hours
+    enabled: true
+    zone:
+      - [80, 80]
+      - [560, 80]
+      - [560, 430]
+      - [80, 430]
+    schedule:
+      days: [mon, tue, wed, thu, fri, sat, sun]
+      start: "22:00"
+      end: "06:00"
+    cooldown_seconds: 30
+    minimum_confidence: 0.45
+
+  - id: entrance_loitering
+    camera_id: entrance
+    type: loitering
+    name: Entrance loitering
+    enabled: true
+    zone:
+      - [80, 80]
+      - [560, 80]
+      - [560, 430]
+      - [80, 430]
+    threshold_seconds: 20
+    cooldown_seconds: 60
+    minimum_confidence: 0.45
+
+  - id: entrance_occupancy
+    camera_id: entrance
+    type: occupancy
+    name: Entrance occupancy limit
+    enabled: false
+    zone:
+      - [80, 80]
+      - [560, 80]
+      - [560, 430]
+      - [80, 430]
+    max_people: 3
+    cooldown_seconds: 60
+
+  - id: entrance_line
+    camera_id: entrance
+    type: line_crossing
+    name: Entrance direction line
+    enabled: false
+    line:
+      - [100, 240]
+      - [540, 240]
+    direction: any  # any, a_to_b, or b_to_a
+    cooldown_seconds: 30
+

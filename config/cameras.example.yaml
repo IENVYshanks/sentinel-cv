@@ -1,0 +1,16 @@
+cameras:
+  - id: entrance
+    name: Main entrance
+    source: 0
+    enabled: true
+    process_every_n_frames: 2
+    reconnect_seconds: 5
+
+  # Example RTSP camera:
+  # - id: warehouse
+  #   name: Warehouse
+  #   source: rtsp://username:password@192.0.2.10/stream
+  #   enabled: false
+  #   process_every_n_frames: 3
+  #   reconnect_seconds: 5
+
