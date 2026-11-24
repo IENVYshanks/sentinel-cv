@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Video Test · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="video-test">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Uploaded tests are deleted after processing.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">OFFLINE ANALYSIS</p><h1>Video Test</h1><p class="page-description">Try person detection and identity recognition on a local video without creating alerts.</p></div><div id="global-system-status" class="status">Connecting…</div></header>
+        <main class="page-content">
+          <section class="video-test-layout">
+            <form id="video-test-form" class="panel video-upload-panel">
+              <div><p class="eyebrow">UPLOAD</p><h2>Select a video</h2></div>
+              <p class="form-help">MP4, MOV, AVI, MKV, or WebM. Maximum size 250 MB. Only one test can run at a time.</p>
+              <label>Video file<input id="video-file" type="file" required accept="video/mp4,video/quicktime,video/x-msvideo,video/x-matroska,video/webm,.mkv"></label>
+              <button id="video-submit" class="primary-button" type="submit">Upload and process</button>
+              <button id="video-cancel" class="danger-button" type="button" disabled>Cancel test</button>
+              <p id="video-message" class="update-note" aria-live="polite"></p>
+            </form>
+            <section class="panel video-preview-panel">
+              <div class="panel-heading"><div><p class="eyebrow">PREVIEW</p><h2 id="video-filename">No video selected</h2></div><span id="video-state" class="status">Idle</span></div>
+              <div class="video-preview"><img id="video-stream" alt="Annotated video test preview"><p id="video-placeholder">The processed preview will appear here.</p></div>
+              <div class="progress-track" aria-label="Video processing progress"><span id="video-progress"></span></div>
+              <div class="video-stats"><span><strong id="video-percent">0%</strong><small>Progress</small></span><span><strong id="video-frames">0 / 0</strong><small>Frames</small></span><span><strong id="video-identities">None</strong><small>Recognized</small></span></div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script defer src="/static/app.js?v=20261124-3"></script><script defer src="/static/video-test.js?v=20261124-3"></script>
+  </body>
+</html>

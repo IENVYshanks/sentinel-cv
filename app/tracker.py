@@ -8,6 +8,10 @@ from app.models import Detection, Track
 
 class CentroidTracker:
     def __init__(self, max_distance: float = 90.0, max_missed_frames: int = 12):
+        if max_distance <= 0:
+            raise ValueError("max_distance must be positive")
+        if max_missed_frames < 0:
+            raise ValueError("max_missed_frames must not be negative")
         self.max_distance = max_distance
         self.max_missed_frames = max_missed_frames
         self._tracks: dict[int, Track] = {}
@@ -59,5 +63,8 @@ class CentroidTracker:
         for track_id in expired:
             del self._tracks[track_id]
 
-        return [track for track in self._tracks.values() if track.missed_frames == 0]
+        return sorted(
+            (track for track in self._tracks.values() if track.missed_frames == 0),
+            key=lambda track: track.id,
+        )
 

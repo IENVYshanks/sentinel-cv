@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Alerts · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="alerts">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Biometric data stays on this device.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">EVENT HISTORY</p><h1>Alerts</h1><p class="page-description">Review detections, recognized identities, rule events, and evidence.</p></div><div class="topbar-actions"><button id="refresh-alerts">Refresh</button><div id="global-system-status" class="status">Connecting…</div></div></header>
+        <main class="page-content"><section class="filter-bar panel"><label>Search<input id="alert-search" type="search" placeholder="Identity, camera, rule…"></label><label>Event type<select id="alert-type"><option value="">All types</option></select></label><span id="alert-count" class="status">0 results</span></section><section id="alerts" class="alerts"></section><p id="alert-update" class="update-note" aria-live="polite"></p></main>
+      </div>
+    </div>
+    <script defer src="/static/app.js?v=20261124-3"></script><script defer src="/static/alerts.js?v=20261124-3"></script>
+  </body>
+</html>

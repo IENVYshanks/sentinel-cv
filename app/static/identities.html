@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Identities · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="identities">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Biometric data stays on this device.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">RECOGNITION GALLERY</p><h1>Identities</h1><p class="page-description">Enroll and maintain the people this system can recognize.</p></div><div class="topbar-actions"><span id="identity-count" class="status">0 enrolled</span><div id="global-system-status" class="status">Connecting…</div></div></header>
+        <main class="page-content">
+          <section class="identity-layout">
+            <form id="identity-form" class="identity-form panel"><div><p class="eyebrow">ENROLLMENT</p><h2>Enroll or replace</h2></div><p class="form-help">Use one clear photo containing exactly one face. Reusing an ID replaces its stored reference.</p><label>Identity ID<input id="identity-id" required maxlength="64" pattern="[A-Za-z0-9_-]+" placeholder="employee-001"></label><label>Display name<input id="identity-name" required maxlength="100" placeholder="Display name"></label><label>Reference photo<input id="identity-image" required type="file" accept="image/jpeg,image/png,image/webp"></label><button id="identity-submit" class="primary-button" type="submit">Process and enroll</button><p id="identity-form-status" class="update-note" aria-live="polite"></p></form>
+            <div id="identity-grid" class="identity-grid"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <template id="identity-template"><article class="identity-card"><img class="identity-photo" alt="Enrolled reference face"><div class="identity-details"><h3 class="identity-name"></h3><p class="identity-id"></p><p class="identity-samples"></p><p class="identity-updated"></p><div class="identity-actions"><button type="button" class="manage-samples">Manage photos</button><button type="button" class="rename-identity">Rename</button><button type="button" class="replace-identity">Replace primary</button><button type="button" class="delete-identity danger-button">Delete</button></div></div></article></template>
+    <dialog id="sample-dialog" class="sample-dialog">
+      <div class="sample-dialog-heading"><div><p class="eyebrow">REFERENCE GALLERY</p><h2 id="sample-dialog-title">Manage photos</h2></div><button id="sample-dialog-close" type="button" aria-label="Close photo manager">Close</button></div>
+      <p class="form-help">Add different angles and lighting conditions. The system compares a live face with every stored photo and uses the strongest match.</p>
+      <form id="sample-form" class="sample-form"><label>Additional reference photo<input id="sample-image" required type="file" accept="image/jpeg,image/png,image/webp"></label><button id="sample-submit" class="primary-button" type="submit">Add photo</button></form>
+      <p id="sample-status" class="update-note" aria-live="polite"></p>
+      <div id="sample-grid" class="sample-grid"></div>
+    </dialog>
+    <script defer src="/static/app.js?v=20261124-3"></script><script defer src="/static/identities.js?v=20261124-3"></script>
+  </body>
+</html>

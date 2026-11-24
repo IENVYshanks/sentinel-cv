@@ -1,0 +1,11 @@
+# Identity recognition is opt-in. Copy this file to identities.yaml and add only
+# people who have explicitly consented. Image paths are relative to this file.
+identities: []
+
+# Example:
+# identities:
+#   - id: employee-001
+#     name: Example Person
+#     images:
+#       - ../data/identities/employee-001/front.jpg
+#       - ../data/identities/employee-001/alternate.jpg

@@ -3,10 +3,25 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*credentials*.json
+credentials/
+secrets/
 config/cameras.yaml
 config/rules.yaml
+config/identities.yaml
 data/*
 !data/.gitkeep
 evidence/*
 !evidence/.gitkeep
+models/*.pt
+models/*.onnx
+data/identities/
 

@@ -27,10 +27,25 @@ class Track:
     missed_frames: int = 0
     zone_entered_at: dict[str, datetime] = field(default_factory=dict)
     previous_centroid: tuple[int, int] | None = None
+    identity_id: str | None = None
+    identity_name: str | None = None
+    identity_confidence: float | None = None
 
     @property
     def centroid(self) -> tuple[int, int]:
         return self.detection.centroid
+
+
+@dataclass(slots=True)
+class IdentityMatch:
+    face: Detection
+    identity_id: str | None
+    display_name: str
+    confidence: float
+
+    @property
+    def known(self) -> bool:
+        return self.identity_id is not None
 
 
 @dataclass(slots=True)

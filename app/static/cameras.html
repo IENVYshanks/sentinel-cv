@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Cameras · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="cameras">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Biometric data stays on this device.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">LIVE MONITORING</p><h1>Cameras</h1><p class="page-description">Streams, connection health, detections, and recognized identities.</p></div><div class="topbar-actions"><button id="refresh-cameras">Refresh</button><div id="global-system-status" class="status">Connecting…</div></div></header>
+        <main class="page-content"><div id="camera-grid" class="camera-grid"></div><p id="camera-update" class="update-note" aria-live="polite"></p></main>
+      </div>
+    </div>
+    <template id="camera-template"><article class="camera-card"><div class="camera-frame"><img alt="Live camera preview"></div><div class="camera-info"><div><h3></h3><p class="camera-id"></p></div><span class="camera-state"></span></div><p class="camera-error"></p></article></template>
+    <script defer src="/static/app.js?v=20261124-3"></script><script defer src="/static/cameras.js?v=20261124-3"></script>
+  </body>
+</html>

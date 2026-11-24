@@ -1,0 +1,7 @@
+cameras:
+  - id: demo
+    name: Synthetic lobby
+    source: demo://people
+    enabled: true
+    process_every_n_frames: 1
+    reconnect_seconds: 1

@@ -31,8 +31,14 @@ def point_in_polygon(point: tuple[int, int], polygon: list[list[int]]) -> bool:
 
 
 def _parse_clock(value: str) -> time:
-    hour, minute = (int(part) for part in value.split(":", maxsplit=1))
-    return time(hour=hour, minute=minute)
+    try:
+        parts = value.split(":")
+        if len(parts) != 2 or any(len(part) != 2 for part in parts):
+            raise ValueError
+        hour, minute = (int(part) for part in parts)
+        return time(hour=hour, minute=minute)
+    except ValueError as exc:
+        raise ValueError(f"Invalid clock value {value!r}; expected HH:MM") from exc
 
 
 def schedule_is_active(schedule: dict[str, Any] | None, now: datetime) -> bool:
@@ -68,24 +74,63 @@ class RuleEngine:
         seen: set[str] = set()
         for rule in rules:
             required = {"id", "camera_id", "type", "name"}
-            if not required.issubset(rule):
+            if not isinstance(rule, dict) or not required.issubset(rule):
                 raise ValueError(f"Invalid rule; required fields: {sorted(required)}")
-            if rule["id"] in seen:
-                raise ValueError(f"Duplicate rule id: {rule['id']}")
-            seen.add(str(rule["id"]))
+            rule_id = str(rule["id"]).strip()
+            if not rule_id or not str(rule["camera_id"]).strip() or not str(rule["name"]).strip():
+                raise ValueError("Rule id, camera_id, and name must not be empty")
+            if rule_id in seen:
+                raise ValueError(f"Duplicate rule id: {rule_id}")
+            seen.add(rule_id)
             if rule["type"] not in SUPPORTED_RULES:
                 raise ValueError(f"Unsupported rule type: {rule['type']}")
+            cooldown = float(rule.get("cooldown_seconds", 30))
+            confidence = float(rule.get("minimum_confidence", 0.0))
+            if cooldown < 0:
+                raise ValueError(f"Rule {rule_id} cooldown_seconds must not be negative")
+            if not 0 <= confidence <= 1:
+                raise ValueError(f"Rule {rule_id} minimum_confidence must be between 0 and 1")
+            schedule = rule.get("schedule")
+            if schedule is not None:
+                if not isinstance(schedule, dict):
+                    raise ValueError(f"Rule {rule_id} schedule must be a mapping")
+                raw_days = schedule.get("days", DAY_NAMES)
+                if not isinstance(raw_days, (list, tuple)) or not raw_days:
+                    raise ValueError(f"Rule {rule_id} schedule days must be a non-empty list")
+                days = [str(day).lower()[:3] for day in raw_days]
+                invalid_days = sorted(set(days) - set(DAY_NAMES))
+                if invalid_days:
+                    raise ValueError(f"Rule {rule_id} has invalid schedule days: {invalid_days}")
+                _parse_clock(str(schedule.get("start", "00:00")))
+                _parse_clock(str(schedule.get("end", "23:59")))
             if rule["type"] == "line_crossing":
                 line = rule.get("line")
-                if not isinstance(line, list) or len(line) != 2:
+                if not RuleEngine._valid_points(line, 2):
                     raise ValueError(f"Rule {rule['id']} requires exactly 2 line points")
+                if line[0] == line[1]:
+                    raise ValueError(f"Rule {rule_id} line points must be different")
                 direction = rule.get("direction", "any")
                 if direction not in {"any", "a_to_b", "b_to_a"}:
                     raise ValueError(f"Rule {rule['id']} has an invalid direction")
             else:
                 zone = rule.get("zone")
-                if not isinstance(zone, list) or len(zone) < 3:
+                if not RuleEngine._valid_points(zone, 3, at_least=True):
                     raise ValueError(f"Rule {rule['id']} requires a polygon with at least 3 points")
+            if rule["type"] == "loitering" and float(rule.get("threshold_seconds", 30)) < 0:
+                raise ValueError(f"Rule {rule_id} threshold_seconds must not be negative")
+            if rule["type"] == "occupancy" and int(rule.get("max_people", 1)) < 0:
+                raise ValueError(f"Rule {rule_id} max_people must not be negative")
+
+    @staticmethod
+    def _valid_points(value: Any, count: int, at_least: bool = False) -> bool:
+        if not isinstance(value, list) or (len(value) < count if at_least else len(value) != count):
+            return False
+        return all(
+            isinstance(point, list)
+            and len(point) == 2
+            and all(isinstance(coordinate, (int, float)) and not isinstance(coordinate, bool) for coordinate in point)
+            for point in value
+        )
 
     def rules_for_camera(self, camera_id: str) -> list[dict[str, Any]]:
         return self.rules_by_camera.get(camera_id, [])
@@ -102,6 +147,8 @@ class RuleEngine:
                 continue
             if rule_type == "line_crossing":
                 for track in tracks:
+                    if track.detection.confidence < float(rule.get("minimum_confidence", 0.0)):
+                        continue
                     crossing_direction = self._crossing_direction(track, rule["line"])
                     wanted_direction = str(rule.get("direction", "any"))
                     if crossing_direction and wanted_direction in {"any", crossing_direction}:
@@ -171,6 +218,20 @@ class RuleEngine:
         previous_side = side(track.previous_centroid)
         current_side = side(track.centroid)
         if previous_side == 0 or current_side == 0 or previous_side * current_side >= 0:
+            return None
+
+        # Crossing the infinite line is insufficient: the movement must intersect
+        # the configured finite segment as well.
+        px, py = track.previous_centroid
+        cx, cy = track.centroid
+
+        def movement_side(point: list[int]) -> float:
+            x, y = point
+            return (cx - px) * (y - py) - (cy - py) * (x - px)
+
+        first_endpoint = movement_side(line[0])
+        second_endpoint = movement_side(line[1])
+        if first_endpoint * second_endpoint > 0:
             return None
         return "a_to_b" if previous_side < 0 < current_side else "b_to_a"
 

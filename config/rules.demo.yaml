@@ -1,0 +1,41 @@
+timezone: Asia/Kolkata
+evidence_retention_days: 1
+rules:
+  - id: demo_restricted
+    camera_id: demo
+    type: restricted_area
+    name: Restricted demo zone
+    zone: [[200, 110], [550, 110], [550, 430], [200, 430]]
+    schedule:
+      days: [mon, tue, wed, thu, fri, sat, sun]
+      start: "23:00"
+      end: "05:00"
+    cooldown_seconds: 5
+    minimum_confidence: 0.5
+
+  - id: demo_loitering
+    camera_id: demo
+    type: loitering
+    name: Loitering demonstration
+    zone: [[350, 130], [470, 130], [470, 340], [350, 340]]
+    threshold_seconds: 4
+    cooldown_seconds: 8
+    minimum_confidence: 0.5
+
+  - id: demo_occupancy
+    camera_id: demo
+    type: occupancy
+    name: Occupancy demonstration
+    zone: [[200, 110], [550, 110], [550, 430], [200, 430]]
+    max_people: 1
+    cooldown_seconds: 6
+
+  - id: demo_line
+    camera_id: demo
+    type: line_crossing
+    name: Direction line
+    enabled: false
+    line: [[120, 260], [560, 260]]
+    direction: any
+    cooldown_seconds: 3
+    minimum_confidence: 0.5

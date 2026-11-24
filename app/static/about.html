@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>About · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="about">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Biometric data stays on this device.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">PROJECT INFORMATION</p><h1>About Sentinel CV</h1><p class="page-description">A local-first computer-vision system for transparent safety monitoring.</p></div><div id="global-system-status" class="status">Connecting…</div></header>
+        <main class="page-content about-page">
+          <section class="about-hero panel">
+            <div><p class="eyebrow">MISSION</p><h2>Understand what is happening without sending footage to the cloud.</h2><p>Sentinel CV combines live person detection, anonymous tracking, optional consent-based identity recognition, configurable safety rules, and evidence-backed alerts in one locally operated service.</p></div>
+            <div class="version-badge"><span>Application version</span><strong>0.1.0</strong><small>Local FastAPI service</small></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">PIPELINE</p><h2>How it works</h2></div></div>
+            <div class="pipeline-grid">
+              <article><span>INPUT</span><h3>Observe</h3><p>Read frames from a webcam, file, or network stream.</p></article>
+              <article><span>VISION</span><h3>Detect</h3><p>Locate people and faces with local YOLO models.</p></article>
+              <article><span>CONTEXT</span><h3>Understand</h3><p>Track motion and optionally match enrolled face embeddings.</p></article>
+              <article><span>RULES</span><h3>Evaluate</h3><p>Apply zone, loitering, occupancy, and line-crossing rules.</p></article>
+              <article><span>HISTORY</span><h3>Record</h3><p>Store alerts and evidence locally for review.</p></article>
+            </div>
+          </section>
+
+          <section class="about-grid">
+            <article class="panel"><p class="eyebrow">CAPABILITIES</p><h2>What it can do</h2><ul class="feature-list"><li>Monitor multiple camera sources</li><li>Detect and track people</li><li>Recognize explicitly enrolled identities</li><li>Label everyone else as Unknown</li><li>Evaluate configurable safety rules</li><li>Retain alerts and evidence locally</li></ul></article>
+            <article class="panel"><p class="eyebrow">PRIVACY</p><h2>Local by design</h2><ul class="feature-list"><li>No public identity search</li><li>No automatic enrollment of unknown people</li><li>No cloud face-recognition service</li><li>Biometric records remain in local SQLite storage</li><li>Identity recognition is opt-in per camera</li><li>Reference images and models are excluded from Git</li></ul></article>
+            <article class="panel"><p class="eyebrow">TECHNOLOGY</p><h2>Built with</h2><dl class="definition-list"><dt>API</dt><dd>FastAPI</dd><dt>Vision</dt><dd>OpenCV + YOLO</dd><dt>Recognition</dt><dd>OpenCV SFace</dd><dt>Storage</dt><dd>SQLite</dd><dt>Interface</dt><dd>HTML, CSS, JavaScript</dd></dl></article>
+            <article class="panel warning-panel"><p class="eyebrow">LIMITATIONS</p><h2>Human review is required</h2><p>Recognition can produce false matches and missed matches because of lighting, pose, occlusion, camera quality, and enrollment quality. Do not use identity output as the sole basis for security, disciplinary, employment, or other consequential decisions.</p></article>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script defer src="/static/app.js?v=20261124-3"></script>
+  </body>
+</html>

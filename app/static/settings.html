@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>System · Sentinel CV</title><link rel="stylesheet" href="/static/styles.css?v=20261124-3"></head>
+  <body data-page="settings">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="/"><span class="brand-mark">S</span><span><strong>Sentinel CV</strong><small>Local monitoring</small></span></a>
+        <nav class="primary-nav" aria-label="Main navigation"><a data-nav="overview" href="/">Overview</a><a data-nav="cameras" href="/cameras">Cameras</a><a data-nav="video-test" href="/video-test">Video Test</a><a data-nav="identities" href="/identities">Identities</a><a data-nav="alerts" href="/alerts">Alerts</a><a data-nav="settings" href="/settings">System</a><a data-nav="about" href="/about">About</a></nav>
+        <div class="sidebar-note"><span class="privacy-dot"></span><div><strong>Local mode</strong><small>Biometric data stays on this device.</small></div></div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar"><div><p class="eyebrow">CONFIGURATION</p><h1>System</h1><p class="page-description">Read-only runtime, storage, model, and privacy information.</p></div><div id="global-system-status" class="status">Connecting…</div></header>
+        <main class="page-content"><section class="settings-grid"><article class="panel"><p class="eyebrow">RUNTIME</p><h2>Service</h2><dl id="runtime-settings" class="definition-list"></dl></article><article class="panel"><p class="eyebrow">MODELS</p><h2>Detection and recognition</h2><dl id="model-settings" class="definition-list"></dl></article><article class="panel"><p class="eyebrow">STORAGE</p><h2>Local data</h2><dl id="storage-settings" class="definition-list"></dl></article><article class="panel warning-panel"><p class="eyebrow">SECURITY</p><h2>Deployment boundary</h2><p>This dashboard has no authentication. Keep it bound to <code>127.0.0.1</code> and do not expose it directly to another network.</p></article></section><p id="settings-error" class="update-note" aria-live="polite"></p></main>
+      </div>
+    </div>
+    <script defer src="/static/app.js?v=20261124-3"></script><script defer src="/static/settings.js?v=20261124-3"></script>
+  </body>
+</html>

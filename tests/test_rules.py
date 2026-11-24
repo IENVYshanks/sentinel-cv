@@ -76,6 +76,48 @@ class RuleEngineTests(unittest.TestCase):
         self.assertEqual(len(alerts), 1)
         self.assertEqual(alerts[0].metadata["direction"], "a_to_b")
 
+    def test_line_crossing_ignores_motion_outside_segment(self):
+        rule = {
+            "id": "line",
+            "camera_id": "cam-1",
+            "type": "line_crossing",
+            "name": "Short line",
+            "line": [[0, 50], [20, 50]],
+        }
+        engine = RuleEngine([rule], "UTC")
+        track = Track(
+            1,
+            Detection(90, 50, 110, 70, 0.9),
+            self.now,
+            self.now,
+            previous_centroid=(100, 40),
+        )
+        self.assertEqual(engine.evaluate("cam-1", [track], self.now), [])
+
+    def test_line_crossing_honors_minimum_confidence(self):
+        rule = {
+            "id": "line",
+            "camera_id": "cam-1",
+            "type": "line_crossing",
+            "name": "Line",
+            "line": [[0, 50], [100, 50]],
+            "minimum_confidence": 0.8,
+        }
+        engine = RuleEngine([rule], "UTC")
+        track = Track(
+            1,
+            Detection(40, 50, 60, 70, 0.5),
+            self.now,
+            self.now,
+            previous_centroid=(50, 40),
+        )
+        self.assertEqual(engine.evaluate("cam-1", [track], self.now), [])
+
+    def test_rejects_invalid_rule_configuration(self):
+        invalid = dict(self.rule, minimum_confidence=2)
+        with self.assertRaisesRegex(ValueError, "minimum_confidence"):
+            RuleEngine([invalid], "UTC")
+
 
 if __name__ == "__main__":
     unittest.main()
